@@ -5,6 +5,11 @@ Take any endpoints recieved and trigger POST call for every endpoint and record 
 
 ---
 
+### General Program Flow
+When the program starts, it kicks off a background job that waits for 60 seconds. During that time, any request to `GET /api/verve/accept` saves the provided id (and an optional endpoint) in our centralised DB (Redis). When the 60 second timer is up, the 60 second loop/job grabs all unique IDs from Redis, totals them, and either logs that number or sends it to RabbitMQ. If any endpoints were collected, the job also makes a POST to each one with the final count and logs the response in a log file called `unique_id_capture.log`. Finally, it clears the stored IDs so the process can repeat every minute with a fresh set.
+
+---
+
 ### Why FastAPI?
 Easy to setup & Handles High Throughput
 
@@ -26,17 +31,13 @@ If RabbitMQ is not setup or connected then the unique id count every minute will
 
 ---
 
-## General Program Flow
-When the program starts, it kicks off a background job that waits for 60 seconds. During that time, any request to `GET /api/verve/accept` saves the provided id (and an optional endpoint) in our centralised DB (Redis). When the 60 second timer is up, the 60 second loop/job grabs all unique IDs from Redis, totals them, and either logs that number or sends it to RabbitMQ. If any endpoints were collected, the job also makes a POST to each one with the final count and logs the response in a log file called `unique_id_capture.log`. Finally, it clears the stored IDs so the process can repeat every minute with a fresh set.
-
----
-
 ### If I Had More Time, I Would Add
 1. Database credentials or RabbitMQ secrets can be secured using environment variables, secret managers, or vaults. Make sure to avoid committing sensitive info directly in version control.
 2. Split the code into separate modules (e.g., aggregator.py for the background aggregation logic, rabbitmq.py for connecting to RabbitMQ, app.py for the FastAPI routes).  
 3. Add Unit tests: This makes the code easier to maintain and test.
 
 ---
+
 
 
 ## Setup: Getting Started:
