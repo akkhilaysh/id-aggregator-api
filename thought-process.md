@@ -25,9 +25,10 @@ If RabbitMQ is not setup or connected then the unique id count every minute will
 
 ---
 
-### General Program Flow
-When the program starts, it kicks off a background thread that waits for 60 seconds. During that time, any request to `GET /api/verve/accept` saves the provided id (and an optional endpoint) in our DB (Redis). When the 60 second timer is up, the thread grabs all unique IDs from Redis, totals them, and either logs that number or sends it to RabbitMQ. If any endpoints were collected, the thread also makes a POST to each one with the final count and logs the response in a log file called `unique_id_capture.log`. Finally, it clears the stored IDs so the process can repeat every minute with a fresh set.
+## General Program Flow
+When the program starts, it kicks off a background job that waits for 60 seconds. During that time, any request to `GET /api/verve/accept` saves the provided id (and an optional endpoint) in our centralised DB (Redis). When the 60 second timer is up, the 60 second loop/job grabs all unique IDs from Redis, totals them, and either logs that number or sends it to RabbitMQ. If any endpoints were collected, the job also makes a POST to each one with the final count and logs the response in a log file called `unique_id_capture.log`. Finally, it clears the stored IDs so the process can repeat every minute with a fresh set.
 
+---
 
 ### If I Had More Time, I Would Add
 1. Database credentials or RabbitMQ secrets can be secured using environment variables, secret managers, or vaults. Make sure to avoid committing sensitive info directly in version control.
@@ -36,7 +37,8 @@ When the program starts, it kicks off a background thread that waits for 60 seco
 
 ---
 
-## Getting Started:
+
+## Setup: Getting Started:
 
 ### Run using Docker
 
