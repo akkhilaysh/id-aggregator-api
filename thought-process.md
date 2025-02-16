@@ -40,7 +40,7 @@ If RabbitMQ is not setup or connected then the unique id count every minute will
 
 
 
-## Setup: Getting Started:
+## Setup - Getting Started:
 
 ### Run using Docker
 
@@ -60,7 +60,7 @@ curl "http://localhost:8000/api/verve/accept?id=123&endpoint=http://example.com"
 
 #### Monitor logs, db and stream
 
-#### Logs
+#### 1. Logs
 ```bash
 docker-compose exec fastapi bash
 
@@ -73,7 +73,7 @@ cat unique_id_capture.log
 exit
 ```
 
-##### Redis
+##### 2. Redis
 ```bash
 
 docker-compose exec redis bash
@@ -89,7 +89,7 @@ SMEMBERS unique_ids_for_current_minute
 exit
 ```
 
-##### Stream (rabbit-mq)
+##### 3. Stream (rabbit-mq)
 ```bash
 docker-compose logs rabbitmq
 
