@@ -3,6 +3,7 @@ Provide a sample implementation of an API that aggregates unique ids consumed vi
 
 Take any endpoints recieved and trigger POST call for every endpoint and record response in log file.
 
+---
 
 ### Why FastAPI?
 Easy to setup & Handles High Throughput
@@ -22,6 +23,7 @@ Leveraging set operations in Redis using r.sadd() ensures duplicates aren’t co
 ### Extension 2:
 If RabbitMQ is not setup or connected then the unique id count every minute will get published to a log file named unique_id_capture.log. If RabbitMQ is available, it sends the aggregated counts there instead.
 
+---
 
 ### General Program Flow
 When the program starts, it kicks off a background thread that waits for 60 seconds. During that time, any request to `GET /api/verve/accept` saves the provided id (and an optional endpoint) in our DB (Redis). When the 60 second timer is up, the thread grabs all unique IDs from Redis, totals them, and either logs that number or sends it to RabbitMQ. If any endpoints were collected, the thread also makes a POST to each one with the final count and logs the response in a log file called `unique_id_capture.log`. Finally, it clears the stored IDs so the process can repeat every minute with a fresh set.
@@ -32,6 +34,7 @@ When the program starts, it kicks off a background thread that waits for 60 seco
 2. Split the code into separate modules (e.g., aggregator.py for the background aggregation logic, rabbitmq.py for connecting to RabbitMQ, app.py for the FastAPI routes).  
 3. Add Unit tests: This makes the code easier to maintain and test.
 
+---
 
 ## Getting Started:
 
@@ -60,7 +63,9 @@ docker-compose exec fastapi bash
 ls
 
 cat unique_id_capture.log
+```
 
+```bash
 exit
 ```
 
@@ -74,8 +79,10 @@ redis-cli
 KEYS *
 
 SMEMBERS unique_ids_for_current_minute
+```
 
-exit 
+```bash
+exit
 ```
 
 ##### Stream (rabbit-mq)
@@ -85,7 +92,9 @@ docker-compose logs rabbitmq
 docker-compose exec rabbitmq bash
 
 rabbitmqctl list_queues name messages
+```
 
+```bash
 exit
 ```
 
