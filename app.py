@@ -117,7 +117,6 @@ def accept(id: int, endpoint: str = None):
         # we will send POST requests to these endpoints in the aggregator
         if endpoint:
             redis_client.sadd(ENDPOINTS_KEY, endpoint)
-            logging.info(f"Added endpoint {endpoint}")
 
         return "ok"
     except Exception as e:
