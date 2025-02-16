@@ -14,8 +14,8 @@ Easy to setup & Handles High Throughput
 
 
 ### Extension 1:
-- **Problem**: Multiple instances of the API could receive the same id at nearly the same time, leading to double-counting.
-- **Solution**: Handling de-duplication due to concurrent writes of the same id: Add a centralised dataset, Redis. 
+Problem: Multiple instances of the API could receive the same id at nearly the same time, leading to double-counting.
+Solution: Handling de-duplication due to concurrent writes of the same id: Add a centralised dataset, Redis. 
   - **Why Redis**: 
 Redis is fast and can handle write heavy 10k requests per second as mentioned in the base requirements.
 Leveraging set operations in Redis using r.sadd() ensures duplicates aren’t counted twice since we share it as a centralised db
