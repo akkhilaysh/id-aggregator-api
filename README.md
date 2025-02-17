@@ -9,7 +9,7 @@ git clone https://github.com/akkhilaysh/id-aggregator-api.git
 ```
 
 ```bash
-cd verve-core-api
+cd id-aggregator-api
 ```
 
 ```bash
