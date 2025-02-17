@@ -13,6 +13,10 @@ cd id-aggregator-api
 ```
 
 ```bash
+docker-compose up --build -d
+```
+
+```bash
 curl "http://localhost:8000/api/verve/accept?id=123&endpoint=http://example.com"
 ```
 
