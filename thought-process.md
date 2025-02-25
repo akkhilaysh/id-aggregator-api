@@ -1,5 +1,5 @@
-## Task
-Provide a sample implementation of an API that aggregates unique ids consumed via a GET request. Record the count unique ids in a log file.
+## Project
+Building an implementation of an API that aggregates unique ids consumed via a GET request. Record the count unique ids in a log file.
 
 Take any endpoints recieved and trigger POST call for every endpoint and record response in log file.
 
@@ -31,7 +31,7 @@ If RabbitMQ is not setup or connected then the unique id count every minute will
 
 ---
 
-### If I Had More Time, I Would Add
+### Next
 1. Database credentials or RabbitMQ secrets can be secured using environment variables, secret managers, or vaults. Make sure to avoid committing sensitive info directly in version control.
 2. Split the code into separate modules (e.g., aggregator.py for the background aggregation logic, rabbitmq.py for connecting to RabbitMQ, app.py for the FastAPI routes).  
 3. Add Unit tests: This makes the code easier to maintain and test.
